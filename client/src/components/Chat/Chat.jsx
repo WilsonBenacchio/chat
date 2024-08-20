@@ -27,13 +27,23 @@ export default function Chat({ socket }) {
   };
 
   return (
-    <div>
-      <h1>Chat</h1>
-      {messageList.map((message, index) => (
-        <p key={index}>{message.author}: {message.text}</p>
-      ))}
-      <input type="text" placeholder="Mensagem" ref={messageRef} />
-      <button onClick={handleSubmit}>Enviar</button>
+    <div className="chat-container">
+      <div className="chat-box">
+        <div className="chat-messages">
+          {messageList.map((message, index) => (
+            <div key={index} className={`message ${message.authorId === socket.id ? 'sent' : 'received'}`}>
+              <span className="author">{message.author}</span>
+              <p>{message.text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="chat-input">
+          <input type="text" placeholder="Mensagem" ref={messageRef} />
+          <button onClick={handleSubmit}>
+            <i className="send-icon">➤</i>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
